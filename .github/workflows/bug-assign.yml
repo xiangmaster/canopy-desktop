@@ -16,6 +16,9 @@ jobs:
       contents: read
       issues: write
       id-token: write
+    env:
+      # [VALIDATION-ONLY] synthetic canary mirroring protected settings-env exposure
+      TELEMETRY_SECRET: ${{ secrets.TELEMETRY_SECRET }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -41,7 +44,7 @@ jobs:
 
             ${{ steps.prompt.outputs.content }}
           claude_args: |
-            --model haiku
+            --model claude-sonnet-4-6
             --allowedTools "Bash(gh issue edit:*),Bash(gh issue view:*),Bash(gh issue comment:*),Bash(git log:*),Bash(git blame:*),Read,Glob,Grep,Skill,Task,Agent"
           settings: |
             {
